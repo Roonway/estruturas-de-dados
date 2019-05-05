@@ -1,0 +1,11 @@
+### Java ###
+# Arquivos de Compilação
+*.class
+
+### C ###
+# Arquivos Objetos
+*.o
+*.ko
+*.obj
+*.elf
+*.win
