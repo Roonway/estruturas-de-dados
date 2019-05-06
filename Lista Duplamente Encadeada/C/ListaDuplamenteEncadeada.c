@@ -102,25 +102,48 @@ int insertAlphabetcalOrder(ListaAluno* lista, Aluno aluno){
 	else{
 		ElementoLista* aux = *lista;
 		
-		while(aux->proximo != NULL){
+		while(aux->proximo != NULL && strcmp(new_no->aluno.nome, aux->aluno.nome)>0){
 			
-			if(strcmp(new_no->aluno.nome, aux->aluno.nome)>0){
-				new_no->anterior = aux;
-				new_no->proximo = aux->proximo;
+			if(!strcmp(new_no->aluno.nome, aux->aluno.nome)){
 				
-				aux->proximo->anterior = new_no;
-				aux->proximo = new_no;
-				
-				return 1;
+				if(aux->aluno.matricula > new_no->aluno.matricula){
+					new_no->anterior = aux->anterior;
+					new_no->proximo = aux;
+					
+					aux->anterior->proximo = new_no;
+					aux->anterior = new_no;
+					
+					return 1;
+				} 
+				else if (aux->aluno.matricula < new_no->aluno.matricula) {
+					new_no->anterior = aux;
+					new_no->proximo = aux->proximo;
+					
+					aux->proximo->anterior = new_no;
+					aux->proximo = new_no;
+						
+					return 1;
+				}
+				else {
+					return 0;
+				}
 			}
 			aux = aux->proximo;
 		}
-	
-		new_no->anterior = NULL;
-		new_no->proximo = *lista;
 		
-		(*lista)->anterior = new_no;
-		*lista = new_no;	
+		if(aux == NULL){
+			new_no->anterior = NULL;
+			new_no->proximo = *lista;
+	
+			(*lista)->anterior = new_no;
+			*lista = new_no;
+		} else {
+			new_no->anterior = aux;
+			new_no->proximo = aux->proximo;
+			
+			aux->proximo->anterior = new_no;
+			aux->proximo = new_no;
+		}
 	}	
 	
 	return 1;
